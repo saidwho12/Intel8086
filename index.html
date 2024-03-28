@@ -2,9 +2,123 @@
 <html lang="en">
 <head>
   <title>Intel8086</title>
+  
+  <script type="text/javascript" src="js/jquery-4.0.0-beta.slim.min.js"></script>
+  <link rel="stylesheet" href="css/main.css"/>
+  <script type="module">
+    (async() => {
+      const response = await fetch('intel8086.wasm');
+      const bytes = await response.arrayBuffer();
+      const { instance } = await WebAssembly.instantiate(bytes);
+
+      console.log("" + instance.exports.hello());
+    })();
+  </script>
 </head>
-<body>
-  <h1>Intel 8086/88</h1>
+<body class="h-dvh">
+  <h1 class="text-xl font-bold">Intel 8086/88 Wasm Interpreter</h1>
   <h2>Web-based assembler & compiler</h2>
+  <div class="flex">
+    <div class="p-2 flex-1"></div>
+    <div class="p-2 flex-1 overflow-y-scroll">
+      <!--register -->
+      <!-- <h3 class="text-lg text-center font-semibold underline">Registers</h3> -->
+      <div class="flex flex-col gap-2"> 
+        <div class="flex flex-col p-2 gap-2 rounded-sm border">
+          <div class="border py-0.5">
+            <p class="text-center text-xs">AX</p>
+            <p class="text-center text-xs">0hABCD</p>
+          </div>
+          <div class="flex [&>*]:flex-1 gap-2 [&>*]:border [&>*]:rounded-sm [&>*]:py-0.5 ">
+            <div>
+              <p class="text-center  text-xs">AH</p>
+              <p class="text-center text-xs ">0hAB</p>
+            </div>
+            <div>
+              <p class="text-center  text-xs">AL</p>
+              <p class="text-center text-xs ">0hCD</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-col w-full gap-2 p-2 rounded-sm border">
+          <div>
+            <p class="text-center  text-xs">BX</p>
+            <p class="text-center  text-xs">0hABCD</p>
+          </div>
+          <div class="flex [&>*]:flex-1 gap-2 [&>*]:border [&>*]:py-0.5">
+            <div>
+              <p class="text-center text-xs">BH</p>
+              <p class="text-center text-xs ">0hAB</p>
+            </div>
+            <div>
+              <p class="text-center text-xs">BL</p>
+              <p class="text-center text-xs">0hCD</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="w-full p-2 rounded-sm border">
+          <p class="text-center text-xs">CX</p>
+          <p class="text-center text-xs">0hABCD</p>
+          <div class="flex [&>*]:flex-1 gap-2 [&>*]:border [&>*]:rounded-sm [&>*]:py-0.5 [&>*]:shadow-sm">
+            <div>
+              <p class="text-center text-xs">BH</p>
+              <p class="text-center text-xs ">0hAB</p>
+            </div>
+            <div>
+              <p class="text-center text-xs">BL</p>
+              <p class="text-center text-xs">0hCD</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="w-full p-2 shadow-sm rounded-md border">
+          <p class="text-center text-xs">DX</p>
+          <p class="text-center text-xs">OhABCD</p>
+          <div class="flex [&>*]:flex-1 gap-2 [&>*]:border [&>*]:rounded-sm [&>*]:py-0.5 [&>*]:shadow-sm">
+            <div>
+              <p class="text-center text-xs">BH</p>
+              <p class="text-center text-xs ">0hAB</p>
+            </div>
+            <div>
+              <p class="text-center text-xs">BL</p>
+              <p class="text-center text-xs">0hCD</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-col py-1 rounded-sm border border-gray-400">
+          <p class="text-center text-sm">SP</p>
+          <p class="text-center text-sm">0x0000</p>
+        </div>
+        <div class="flex flex-col py-1 rounded-sm border border-gray-400">
+          <p class="text-center text-sm">BP</p>
+          <p class="text-center text-sm">0x0000</p>
+        </div>
+        <div class="flex flex-col py-1 rounded-sm border border-gray-400">
+          <p class="text-center text-sm">SI</p>
+          <p class="text-center text-sm">0x0000</p>
+        </div>
+        <div class="flex flex-col py-1 rounded-sm border border-gray-400">
+          <p class="text-center text-sm">DI</p>
+          <div class="flex">
+            <div class="flex-1">
+              <select class="w-full text-center text-sm" id="register-view-DI">
+                <option value="binary">Binary</option>
+                <option value="hex">Hexadecimal</option>
+                <option value="sint">Signed Int</option>
+                <option value="uint">Unsigned Int</option>
+              </select>
+            </div>
+            <div class="flex-1">
+            <input type="text" value="0x0000" name="register-DI" class="text-center text-sm">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="js/tailwindcss-3.4.1.min.js"></script>
 </body>
 </html>
